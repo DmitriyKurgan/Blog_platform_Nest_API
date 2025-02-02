@@ -9,8 +9,8 @@ export class BlogsController {
     constructor(
         private readonly blogsService: BlogsService,
         private readonly blogsQueryRepository: BlogsQueryRepository
-    ) {
-    }
+    ) {}
+
     @Get()
     async getBlogs(@Query() query: FindAllBlogsDto ): Promise<any> {
         return this.blogsQueryRepository.getBlogs(query)
@@ -23,8 +23,6 @@ export class BlogsController {
 
     @Delete(':id')
     async deleteBlog(@Param('id') blogID: string) {
-        console.log(blogID)
-         return this.blogsService.deleteBlog(blogID)
+        return this.blogsService.deleteBlog(blogID)
     }
-
 }

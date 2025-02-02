@@ -6,8 +6,7 @@ import {Inject} from "@nestjs/common";
 export class BlogsService {
     constructor(
         @Inject() private readonly blogsRepository: BlogsRepository
-    ){
-    }
+    ) {}
 
     async createBlog (createBlogDto: CreateBlogDto): Promise<Blog>{
         const newBlog = {
@@ -15,6 +14,7 @@ export class BlogsService {
             createdAt: new Date().toISOString(),
             isMembership: false,
         }
+
         return this.blogsRepository.createBlog(newBlog)
     }
 
