@@ -21,6 +21,13 @@ export const BlogSchema = new mongoose.Schema(
         'Website URL must be a valid HTTPS URL',
       ],
     },
+    createdAt: {
+      type: String,
+    },
+    isMembership: {
+      type: Boolean,
+      default: false
+    },
   },
   { versionKey: false },
 );
