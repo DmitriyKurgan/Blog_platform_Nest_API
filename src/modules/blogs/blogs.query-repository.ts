@@ -14,7 +14,7 @@ export class BlogsQueryRepository {
 
     async getBlogs(queryParams: FindAllBlogsDto): Promise<Paginated<BlogViewModel[]>> {
 
-        const filter = queryParams.searchNameTerm ? { name: { $regex: queryParams.searchNameTerm, $options: 'i' } } : {};
+        const filter = queryParams.searchNameTerm ? { name: { $regex: queryParams.searchNameTerm, $options: 'i' } } : {}
         const sortOptions: Record<string, SortOrder> = queryParams.order as Record<string, SortOrder>;
 
         const [totalCount, items]: [number, BlogDBModel[]] = await Promise.all([
@@ -32,6 +32,11 @@ export class BlogsQueryRepository {
             count: totalCount,
             size: queryParams.pageSize,
             page: queryParams.pageNumber,
-        });
+        })
+    }
+
+    async getBlogByID(blogID: string): Promise<BlogViewModel> {
+        const blog = await this.blogModel.findById(blogID).exec()
+        return new BlogViewModel(blog)
     }
 }
