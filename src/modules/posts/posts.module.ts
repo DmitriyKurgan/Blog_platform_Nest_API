@@ -6,9 +6,10 @@ import {PostsService} from "./posts.service";
 import {PostsController} from "./posts.controller";
 import {postsProviders} from "../../schemas/posts.providers";
 import {BlogsModule} from "../blogs/blogs.module";
+import {CommentsModule} from "../comments/comments.module";
 
 @Module({
-  imports:[DatabaseModule, forwardRef(() => BlogsModule)],
+  imports:[DatabaseModule, forwardRef(() => BlogsModule), forwardRef(() => CommentsModule)],
   controllers: [PostsController],
   providers: [
       PostsService,

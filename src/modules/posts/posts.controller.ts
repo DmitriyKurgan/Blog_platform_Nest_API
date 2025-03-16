@@ -4,12 +4,15 @@ import {PostsQueryRepository} from "./posts.query-repository";
 import {PostsService} from "./posts.service";
 import {CreatePostDto} from "./dto/createPost";
 import {UpdatePostDto} from "./dto/updatePost";
+import {CommentsQueryRepository} from "../comments/comments.query-repository";
+import {FindAllCommentsDto} from "../comments/queryDto/findAllCommentsDto";
 
 @Controller('posts')
 export class PostsController {
     constructor(
         private readonly postsService: PostsService,
-        private readonly postsQueryRepository: PostsQueryRepository
+        private readonly postsQueryRepository: PostsQueryRepository,
+        private readonly commentsQueryRepository: CommentsQueryRepository
     ) {}
 
     @Get()
@@ -20,6 +23,14 @@ export class PostsController {
     @Get(':id')
     async getPostByID(@Param('id') postID: string): Promise<any> {
         return this.postsQueryRepository.getPostByID(postID)
+    }
+
+    @Get(':id/comments')
+    async getCommentsByPostID(
+        @Param('id') postID: string,
+        @Body('id') dto: FindAllCommentsDto,
+    ): Promise<any> {
+        return this.commentsQueryRepository.getComments(dto)
     }
 
     @Post()
