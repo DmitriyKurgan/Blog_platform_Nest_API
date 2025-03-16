@@ -11,11 +11,13 @@ export class PostsService {
         @Inject() private readonly blogsQueryRepository: BlogsQueryRepository
     ) {}
 
-    async createPost (createPostDto: CreatePostDto): Promise<Post>{
+    async createPost (createPostDto: CreatePostDto): Promise<Post | null>{
 
         const { blogId } = createPostDto
 
         const currentBlog = await this.blogsQueryRepository.getBlogByID(blogId)
+
+        if (!currentBlog) return null
 
         const newPost = {
             ...createPostDto,
@@ -32,11 +34,11 @@ export class PostsService {
         return this.postsRepository.createPost(newPost)
     }
 
-    async updatePost (postID: string, updatePostDto: UpdatePostDto): Promise<Post>{
+    async updatePost (postID: string, updatePostDto: UpdatePostDto): Promise<Post | null>{
         return this.postsRepository.updatePost(postID, updatePostDto)
     }
 
-    async deletePost (postID: string): Promise<Post>{
+    async deletePost (postID: string): Promise<Post | null>{
         return this.postsRepository.deletePost(postID)
     }
 }

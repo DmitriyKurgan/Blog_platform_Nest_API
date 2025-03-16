@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import {Document, ObjectId} from 'mongoose';
 
 export class Likes {
   addedAt: string
@@ -7,6 +7,7 @@ export class Likes {
 }
 
 export interface PostDBModel extends Document {
+  readonly _id: string | ObjectId
   readonly title: string
   readonly shortDescription: string
   readonly content: string

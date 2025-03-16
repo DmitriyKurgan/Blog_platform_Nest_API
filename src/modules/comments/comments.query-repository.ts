@@ -35,8 +35,11 @@ export class CommentsQueryRepository {
         })
     }
 
-    async getCommentByID (commentID: string): Promise<CommentViewModel> {
+    async getCommentByID (commentID: string): Promise<CommentViewModel | null> {
         const comment = await this.commentModel.findById(commentID).exec()
+
+        if (!comment) return null
+
         return new CommentViewModel(comment)
     }
 

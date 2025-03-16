@@ -23,9 +23,11 @@ export class BlogsService {
         return this.blogsRepository.createBlog(newBlog)
     }
 
-    async createPostForBlogByID (blogID: string, createPostDto: CreatePostDto): Promise<Post>{
+    async createPostForBlogByID (blogID: string, createPostDto: CreatePostDto): Promise<Post | null>{
 
         const currentBlog = await this.blogsQueryRepository.getBlogByID(blogID)
+
+        if (!currentBlog) return null
 
         const newPost = {
             ...createPostDto,
@@ -42,11 +44,11 @@ export class BlogsService {
         return this.blogsRepository.createPostForBlogByID(newPost)
     }
 
-    async updateBlog (blogID: string, updateBlogDto: UpdateBlogDto): Promise<Blog>{
+    async updateBlog (blogID: string, updateBlogDto: UpdateBlogDto): Promise<Blog | null>{
         return this.blogsRepository.updateBlog(blogID, updateBlogDto)
     }
 
-    async deleteBlog (blogID: string): Promise<Blog>{
+    async deleteBlog (blogID: string): Promise<Blog | null>{
         return this.blogsRepository.deleteBlog(blogID)
     }
 }

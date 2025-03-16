@@ -10,7 +10,7 @@ export class CommentsService {
     ) {}
 
 
-    async getCommentByID (commentID: string): Promise<CommentViewModel> {
+    async getCommentByID (commentID: string): Promise<CommentViewModel | null> {
         return this.commentsQueryRepository.getCommentByID(commentID)
     }
 }

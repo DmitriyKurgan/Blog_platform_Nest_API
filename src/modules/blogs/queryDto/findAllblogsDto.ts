@@ -3,5 +3,5 @@ import { PaginationSearchDto } from '../../../common/paginationSeachDto';
 
 export class FindAllBlogsDto extends PaginationSearchDto {
     @IsOptional()
-    searchNameTerm?: string = null;
+    searchNameTerm?: string | null = null
 }

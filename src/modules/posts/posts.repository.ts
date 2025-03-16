@@ -16,7 +16,7 @@ export class PostsRepository {
         return createdPost.save()
     }
 
-    async updatePost (blogID: string, updateData: UpdatePostDto): Promise<Post>{
+    async updatePost (blogID: string, updateData: UpdatePostDto): Promise<Post | null>{
 
         const updatedPost = await this.postModel.findByIdAndUpdate(
             blogID,
@@ -27,7 +27,7 @@ export class PostsRepository {
         return updatedPost
     }
 
-    async deletePost (postID: string): Promise<Post>{
+    async deletePost (postID: string): Promise<Post | null>{
         return this.postModel.findByIdAndDelete(postID)
     }
 }

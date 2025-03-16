@@ -23,7 +23,7 @@ export class BlogsRepository {
         return createdPostForBlogByID.save()
     }
 
-    async updateBlog (blogID: string, updateData: UpdateBlogDto): Promise<Blog>{
+    async updateBlog (blogID: string, updateData: UpdateBlogDto): Promise<Blog | null>{
 
         const updatedBlog = await this.blogModel.findByIdAndUpdate(
             blogID,
@@ -34,7 +34,7 @@ export class BlogsRepository {
         return updatedBlog
     }
 
-    async deleteBlog (blogID: string): Promise<Blog>{
+    async deleteBlog (blogID: string): Promise<Blog | null>{
         return this.blogModel.findByIdAndDelete(blogID)
     }
 }

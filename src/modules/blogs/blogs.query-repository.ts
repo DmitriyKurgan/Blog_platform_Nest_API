@@ -35,8 +35,11 @@ export class BlogsQueryRepository {
         })
     }
 
-    async getBlogByID(blogID: string): Promise<BlogViewModel> {
+    async getBlogByID(blogID: string): Promise<BlogViewModel | null> {
         const blog = await this.blogModel.findById(blogID).exec()
+
+        if (!blog) return null
+
         return new BlogViewModel(blog)
     }
 }

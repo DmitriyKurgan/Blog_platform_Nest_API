@@ -35,8 +35,11 @@ export class PostsQueryRepository {
         })
     }
 
-    async getPostByID(postID: string): Promise<PostViewModel> {
+    async getPostByID(postID: string): Promise<PostViewModel | null> {
         const blog = await this.postModel.findById(postID).exec()
+
+        if (!blog) return null
+
         return new PostViewModel(blog)
     }
 }

@@ -1,6 +1,7 @@
-import { Document } from 'mongoose';
+import {Document, ObjectId} from 'mongoose';
 
 export interface BlogDBModel extends Document {
+  readonly _id: string | ObjectId
   readonly name: string
   readonly description: number
   readonly websiteUrl: string
