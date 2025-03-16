@@ -28,9 +28,9 @@ export class BlogsController {
         return this.blogsService.createBlog(dto)
     }
 
-    @Post()
+    @Post(':id/posts')
     async createPostForBlogByID(
-        @Param('id/posts') blogID: string,
+        @Param('id') blogID: string,
         @Body() dto: CreatePostDto,
     ) {
         return this.blogsService.createPostForBlogByID(blogID, dto)
