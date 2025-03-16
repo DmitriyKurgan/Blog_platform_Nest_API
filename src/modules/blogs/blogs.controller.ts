@@ -4,6 +4,7 @@ import {CreateBlogDto} from "./dto/createBlog";
 import {FindAllBlogsDto} from "./queryDto/findAllblogsDto";
 import {BlogsQueryRepository} from "./blogs.query-repository";
 import {UpdateBlogDto} from "./dto/updateBlog";
+import {CreatePostDto} from "../posts/dto/createPost";
 
 @Controller('blogs')
 export class BlogsController {
@@ -25,6 +26,14 @@ export class BlogsController {
     @Post()
     async createBlog(@Body() dto: CreateBlogDto) {
         return this.blogsService.createBlog(dto)
+    }
+
+    @Post()
+    async createPostForBlogByID(
+        @Param('id/posts') blogID: string,
+        @Body() dto: CreatePostDto,
+    ) {
+        return this.blogsService.createPostForBlogByID(blogID, dto)
     }
 
     @Put(':id')
