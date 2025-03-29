@@ -7,7 +7,7 @@ export class ParseMongoIdPipe implements PipeTransform<string> {
 
     transform(value: string): string {
         if (!this.objectIdRegex.test(value)) {
-            throw new BadRequestException(`Invalid MongoDB ID format: ${value}`);
+            throw new BadRequestException(`Invalid MongoDB ID format: ${value}`)
         }
         return value;
     }
