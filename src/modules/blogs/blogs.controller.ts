@@ -6,7 +6,7 @@ import {BlogsQueryRepository} from "./blogs.query-repository";
 import {UpdateBlogDto} from "./dto/updateBlog";
 import {CreatePostDto} from "../posts/dto/createPost";
 import {BlogViewModel} from "./dto/getBlog";
-import {ParseMongoIdPipe} from "../../pipes/parse-mongo-id.pipe";
+import {ValidateBlogIdPipe} from "../../pipes/parse-mongo-id.pipe";
 
 @Controller('blogs')
 export class BlogsController {
@@ -32,10 +32,9 @@ export class BlogsController {
 
     @Post(':id/posts')
     async createPostForBlogByID(
-        @Param('id', new ParseMongoIdPipe()) blogID: string,
+        @Param('id', ValidateBlogIdPipe) blogID: string,
         @Body() dto: CreatePostDto,
     ) {
-        console.log('blogID', blogID)
         return this.blogsService.createPostForBlogByID(blogID, dto)
     }
 
