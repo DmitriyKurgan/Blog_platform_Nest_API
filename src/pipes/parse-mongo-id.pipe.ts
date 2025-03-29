@@ -1,12 +1,14 @@
 import { PipeTransform, Injectable, BadRequestException } from '@nestjs/common';
-import { Types } from 'mongoose';
 
 @Injectable()
 export class ParseMongoIdPipe implements PipeTransform<string> {
+
+    private readonly objectIdRegex = /^[0-9a-fA-F]{24}$/
+
     transform(value: string): string {
-        if (!Types.ObjectId.isValid(value)) {
-            throw new BadRequestException(`Invalid MongoDB ID: ${value}`)
+        if (!this.objectIdRegex.test(value)) {
+            throw new BadRequestException(`Invalid MongoDB ID format: ${value}`);
         }
-        return value
+        return value;
     }
 }
