@@ -13,15 +13,15 @@ export class TestingRepository {
     ) {}
 
     async deleteAllBlogs(): Promise<any> {
-        return this.blogModel.deleteMany([])
+        return this.blogModel.deleteMany({})
     }
 
     async deleteAllPosts(): Promise<any>{
-        return this.postModel.deleteMany([])
+        return this.postModel.deleteMany({})
     }
 
     async deleteAllComments (): Promise<any> {
-        return this.commentModel.deleteMany([])
+        return this.commentModel.deleteMany({})
     }
 
 }
