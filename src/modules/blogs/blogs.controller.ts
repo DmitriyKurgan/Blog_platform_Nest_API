@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, Param, Patch, Post, Put, Query} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Put, Query} from '@nestjs/common';
 import {BlogsService} from './blogs.service';
 import {CreateBlogDto} from "./dto/createBlog";
 import {FindAllBlogsDto} from "./queryDto/findAllblogsDto";
@@ -6,6 +6,7 @@ import {BlogsQueryRepository} from "./blogs.query-repository";
 import {UpdateBlogDto} from "./dto/updateBlog";
 import {CreatePostDto} from "../posts/dto/createPost";
 import {BlogViewModel} from "./dto/getBlog";
+import {ParseMongoIdPipe} from "../../pipes/parse-mongo-id.pipe";
 
 @Controller('blogs')
 export class BlogsController {
@@ -31,9 +32,10 @@ export class BlogsController {
 
     @Post(':id/posts')
     async createPostForBlogByID(
-        @Param('id') blogID: string,
+        @Param('id', new ParseMongoIdPipe()) blogID: string,
         @Body() dto: CreatePostDto,
     ) {
+        console.log('blogID', blogID)
         return this.blogsService.createPostForBlogByID(blogID, dto)
     }
 
