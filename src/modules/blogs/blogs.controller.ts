@@ -5,6 +5,7 @@ import {FindAllBlogsDto} from "./queryDto/findAllblogsDto";
 import {BlogsQueryRepository} from "./blogs.query-repository";
 import {UpdateBlogDto} from "./dto/updateBlog";
 import {CreatePostDto} from "../posts/dto/createPost";
+import {BlogViewModel} from "./dto/getBlog";
 
 @Controller('blogs')
 export class BlogsController {
@@ -19,7 +20,7 @@ export class BlogsController {
     }
 
     @Get(':id')
-    async getBlogByID(@Param('id') blogID: string): Promise<any> {
+    async getBlogByID(@Param('id') blogID: string): Promise<BlogViewModel | null> {
         return this.blogsQueryRepository.getBlogByID(blogID)
     }
 
