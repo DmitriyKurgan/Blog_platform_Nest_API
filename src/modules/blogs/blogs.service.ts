@@ -6,6 +6,7 @@ import {UpdateBlogDto} from "./dto/updateBlog";
 import {BlogsQueryRepository} from "./blogs.query-repository";
 import {CreatePostDto} from "../posts/dto/createPost";
 import {Post} from "../posts/types/createPost";
+import {BlogViewModel} from "./dto/getBlog";
 
 export class BlogsService {
     constructor(
@@ -13,7 +14,7 @@ export class BlogsService {
         @Inject() private readonly blogsQueryRepository: BlogsQueryRepository
     ) {}
 
-    async createBlog (createBlogDto: CreateBlogDto): Promise<Blog>{
+    async createBlog (createBlogDto: CreateBlogDto): Promise<BlogViewModel>{
         const newBlog = {
             ...createBlogDto,
             createdAt: new Date().toISOString(),

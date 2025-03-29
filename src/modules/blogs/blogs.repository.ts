@@ -5,6 +5,7 @@ import {BlogDBModel} from "./types/getBlog";
 import {UpdateBlogDto} from "./dto/updateBlog";
 import {Post} from "../posts/types/createPost";
 import {PostDBModel} from "../posts/types/getPost";
+import {BlogViewModel} from "./dto/getBlog";
 
 @Injectable()
 export class BlogsRepository {
@@ -13,9 +14,12 @@ export class BlogsRepository {
         @Inject('POST_MODEL') private postModel: Model<PostDBModel>,
     ) {}
 
-    async createBlog (blogData: Partial<Blog>): Promise<Blog>{
+    async createBlog (blogData: Partial<Blog>): Promise<BlogViewModel>{
+
         const createdBlog = new this.blogModel(blogData)
-        return createdBlog.save()
+        await createdBlog.save()
+
+        return new BlogViewModel(createdBlog)
     }
 
     async createPostForBlogByID (postData: Partial<Post>): Promise<Post>{
