@@ -31,7 +31,7 @@ export class BlogsController {
 
     @Get(':id/posts')
     async getAllPostsByBlogID(
-        @Param('id') blogID: string,
+        @Param('id', ValidateBlogIdPipe) blogID: string,
         @Query() query: FindAllPostsDto
     ): Promise<any> {
         return this.postsQueryRepository.getPosts(query, blogID)
