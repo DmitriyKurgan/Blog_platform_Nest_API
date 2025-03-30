@@ -12,10 +12,17 @@ export class PostsQueryRepository {
       private postModel: Model<PostDBModel>,
     ) {}
 
-    async getPosts(queryParams: FindAllPostsDto): Promise<Paginated<PostViewModel[]>> {
+    async getPosts(
+        queryParams: FindAllPostsDto,
+        blogID?: string
+    ): Promise<Paginated<PostViewModel[]>> {
 
-        const filter = queryParams.searchNameTerm ? { name: { $regex: queryParams.searchNameTerm, $options: 'i' } } : {}
+        const filter: any = queryParams.searchNameTerm ? { name: { $regex: queryParams.searchNameTerm, $options: 'i' } } : {}
         const sortOptions: Record<string, SortOrder> = queryParams.order as Record<string, SortOrder>
+
+        if (blogID) {
+            filter.blogId = blogID
+        }
 
         const [totalCount, items]: [number, PostDBModel[]] = await Promise.all([
             this.postModel.countDocuments(filter),
