@@ -33,6 +33,7 @@ export class BlogsService {
 
         const newPost = {
             ...createPostDto,
+            blogId: blogID,
             blogName: currentBlog.name,
             createdAt: new Date().toISOString(),
             extendedLikesInfo: {
