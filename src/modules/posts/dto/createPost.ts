@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsOptional, IsString, Length} from "class-validator";
+import {IsNotEmpty, IsString, Length} from "class-validator";
 
 export class CreatePostDto {
     @IsString()
@@ -17,6 +17,6 @@ export class CreatePostDto {
     content: string
 
     @IsString()
-    @IsOptional()
+    @IsNotEmpty()
     blogId: string
 }
