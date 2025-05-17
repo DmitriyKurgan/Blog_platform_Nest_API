@@ -13,11 +13,11 @@ export class ValidateBlogIdPipe implements PipeTransform<string> {
         //     throw new BadRequestException(`Invalid MongoDB ID: ${value}`)
         // }
 
-        const blog = await this.blogsQueryRepository.getBlogByID(value)
-        if (!blog) {
-            console.log(`Blog with ID ${value} not found`)
-            throw new NotFoundException(`Blog with ID ${value} not found`)
-        }
+        // const blog = await this.blogsQueryRepository.getBlogByID(value)
+        // if (!blog) {
+        //     console.log(`Blog with ID ${value} not found`)
+        //     throw new NotFoundException(`Blog with ID ${value} not found`)
+        // }
 
         return value
     }
