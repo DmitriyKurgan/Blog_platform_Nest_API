@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, Param, Post, Put, Query} from '@nestjs/common';
+import {BadRequestException, Body, Controller, Delete, Get, Param, Post, Put, Query} from '@nestjs/common';
 import {FindAllPostsDto} from "./queryDto/findAllPostsDto";
 import {PostsQueryRepository} from "./posts.query-repository";
 import {PostsService} from "./posts.service";
@@ -35,6 +35,9 @@ export class PostsController {
 
     @Post()
     async createPost(@Body() dto: CreatePostDto) {
+
+        if (!dto.blogId) throw new BadRequestException('Blog ID is required')
+
         return this.postsService.createPost(dto)
     }
 
