@@ -9,6 +9,7 @@ export class ValidateBlogIdPipe implements PipeTransform<string> {
 
     async transform(value: string): Promise<string> {
 
+        if (!value) throw new NotFoundException(` Blog ID is not exist`)
         // if (!Types.ObjectId.isValid(value)) {
         //     throw new BadRequestException(`Invalid MongoDB ID: ${value}`)
         // }
