@@ -44,7 +44,7 @@ export class BlogsController {
 
     @Post(':id/posts')
     async createPostForBlogByID(
-        @Param('id') blogID: string,
+        @Param('id', ValidateBlogIdPipe) blogID: string,
         @Body() dto: CreatePostDto,
     ) {
         return this.blogsService.createPostForBlogByID(blogID, dto)
