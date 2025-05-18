@@ -3,6 +3,7 @@ import {Inject} from "@nestjs/common";
 import {CreateUserDto} from "./dto/createUser";
 import {User} from "./types/createUser";
 import {UsersQueryRepository} from "./users.query-repository";
+import {UserViewModel} from "./dto/getUser";
 
 export class UsersService {
     constructor(
@@ -10,7 +11,7 @@ export class UsersService {
         @Inject() private readonly usersQueryRepository: UsersQueryRepository
     ) {}
 
-    async createUser (createUserDto: CreateUserDto): Promise<User | null>{
+    async createUser (createUserDto: CreateUserDto): Promise<UserViewModel | null>{
 
         const newUser = {
             ...createUserDto,

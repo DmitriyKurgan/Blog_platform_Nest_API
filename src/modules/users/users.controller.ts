@@ -4,6 +4,7 @@ import {UsersQueryRepository} from "./users.query-repository";
 import {UsersService} from "./users.service";
 import {CreateUserDto} from "./dto/createUser";
 import {ValidateUserIdPipe} from "../../pipes/parse-mongo-id.pipe";
+import {UserViewModel} from "./dto/getUser";
 
 @Controller('users')
 export class UsersController {
@@ -18,7 +19,7 @@ export class UsersController {
     }
 
     @Post()
-    async createPost(@Body() dto: CreateUserDto) {
+    async createPost(@Body() dto: CreateUserDto): Promise<UserViewModel | null> {
         return this.usersService.createUser(dto)
     }
 
