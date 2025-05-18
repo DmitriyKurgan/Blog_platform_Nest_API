@@ -1,4 +1,4 @@
-import {BadRequestException, Body, Controller, Delete, Get, Param, Post, Put, Query} from '@nestjs/common';
+import {BadRequestException, Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query} from '@nestjs/common';
 import {FindAllPostsDto} from "./queryDto/findAllPostsDto";
 import {PostsQueryRepository} from "./posts.query-repository";
 import {PostsService} from "./posts.service";
@@ -8,6 +8,7 @@ import {CommentsQueryRepository} from "../comments/comments.query-repository";
 import {FindAllCommentsDto} from "../comments/queryDto/findAllCommentsDto";
 import {BlogsQueryRepository} from "../blogs/blogs.query-repository";
 import {PostViewModel} from "./dto/getPost";
+import {ValidatePostIdPipe} from "../../pipes/parse-mongo-id.pipe";
 
 @Controller('posts')
 export class PostsController {
@@ -24,7 +25,7 @@ export class PostsController {
     }
 
     @Get(':id')
-    async getPostByID(@Param('id') postID: string): Promise<any> {
+    async getPostByID(@Param('id', ValidatePostIdPipe) postID: string): Promise<PostViewModel | null> {
         return this.postsQueryRepository.getPostByID(postID)
     }
 
@@ -49,16 +50,18 @@ export class PostsController {
     }
 
     @Put(':id')
+    @HttpCode(204)
     async updatePost(
         @Body() updatePostDto: UpdatePostDto,
-        @Param('id') postID: string,
+        @Param('id', ValidatePostIdPipe) postID: string,
     ) {
         return this.postsService.updatePost(postID, updatePostDto)
     }
 
 
     @Delete(':id')
-    async deletePost(@Param('id') postID: string) {
+    @HttpCode(204)
+    async deletePost(@Param('id', ValidatePostIdPipe) postID: string) {
         return this.postsService.deletePost(postID)
     }
 }
