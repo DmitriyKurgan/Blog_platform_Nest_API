@@ -10,11 +10,13 @@ import {ValidateBlogIdPipe} from "../../pipes/parse-mongo-id.pipe";
 import {Paginated} from "../../common/paginated";
 import {PostsQueryRepository} from "../posts/posts.query-repository";
 import {FindAllPostsDto} from "../posts/queryDto/findAllPostsDto";
+import {logAndThrowError, LoggerService} from "../logger/logger-service";
 
 @Controller('blogs')
 export class BlogsController {
     constructor(
         private readonly blogsService: BlogsService,
+        private readonly loggerService: LoggerService,
         private readonly blogsQueryRepository: BlogsQueryRepository,
         private readonly postsQueryRepository: PostsQueryRepository
     ) {}
@@ -34,7 +36,13 @@ export class BlogsController {
         @Param('id', ValidateBlogIdPipe) blogID: string,
         @Query() query: FindAllPostsDto
     ): Promise<any> {
-        return this.postsQueryRepository.getPosts(query, blogID)
+
+        try {
+            return this.postsQueryRepository.getPosts(query, blogID)
+        } catch (error) {
+            logAndThrowError(error, this.loggerService)
+        }
+
     }
 
     @Post()

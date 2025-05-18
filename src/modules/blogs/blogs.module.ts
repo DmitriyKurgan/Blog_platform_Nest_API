@@ -6,11 +6,13 @@ import {DatabaseModule} from "../database/database.module";
 import {BlogsRepository} from "./blogs.repository";
 import {BlogsQueryRepository} from "./blogs.query-repository";
 import {PostsModule} from "../posts/posts.module";
+import {LoggerService} from "../logger/logger-service";
 
 @Module({
   imports:[DatabaseModule, forwardRef(() => PostsModule)],
   controllers: [BlogsController],
   providers: [
+      LoggerService,
       BlogsService,
       BlogsRepository,
       BlogsQueryRepository,
