@@ -3,6 +3,7 @@ import { Model } from "mongoose";
 import {BlogDBModel} from "../blogs/types/getBlog";
 import {CommentDBModel} from "../comments/types/getComment";
 import {PostDBModel} from "../posts/types/getPost";
+import {UserDBModel} from "../users/types/getUser";
 
 @Injectable()
 export class TestingRepository {
@@ -10,6 +11,7 @@ export class TestingRepository {
         @Inject('BLOG_MODEL') private blogModel: Model<BlogDBModel>,
         @Inject('POST_MODEL') private postModel: Model<PostDBModel>,
         @Inject('COMMENT_MODEL') private commentModel: Model<CommentDBModel>,
+        @Inject('USER_MODEL') private userModel: Model<UserDBModel>,
     ) {}
 
     async deleteAllBlogs(): Promise<any> {
@@ -22,6 +24,10 @@ export class TestingRepository {
 
     async deleteAllComments (): Promise<any> {
         return this.commentModel.deleteMany({})
+    }
+
+    async deleteAllUsers (): Promise<any> {
+        return this.userModel.deleteMany({})
     }
 
 }

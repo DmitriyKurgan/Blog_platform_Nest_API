@@ -1,6 +1,7 @@
 import {TestingRepository} from "./testing.repository";
 import {Inject} from "@nestjs/common";
 import {Post} from "../posts/types/createPost";
+import {User} from "../users/types/createUser";
 
 export class TestingService {
     constructor(
@@ -16,5 +17,9 @@ export class TestingService {
 
     async deleteAllComments (): Promise<Post | null>{
         return this.testingRepository.deleteAllComments()
+    }
+
+    async deleteAllUsers (): Promise<User | null>{
+        return this.testingRepository.deleteAllUsers()
     }
 }

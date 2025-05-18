@@ -13,6 +13,7 @@ export class TestingController {
         await Promise.all([
             this.testingService.deleteAllBlogs(),
             this.testingService.deleteAllPosts(),
+            this.testingService.deleteAllUsers(),
             this.testingService.deleteAllComments()
         ])
 
