@@ -38,6 +38,8 @@ export class PostsController {
     @Post()
     async createPost(@Body() dto: CreatePostDto) {
         console.log('CreatePostDto', dto)
+        if (!dto.blogId) throw new BadRequestException('Blog ID is required')
+        if (dto.blogId.length !== 24) throw new BadRequestException('Blog ID is not valid')
         const blog = await this.blogsQueryRepository.getBlogByID(dto.blogId)
         console.log('blog', blog)
         if (!blog) throw new BadRequestException('Blog ID is required')
