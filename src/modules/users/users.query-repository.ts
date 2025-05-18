@@ -15,7 +15,20 @@ export class UsersQueryRepository {
 
     async getUsers(queryParams: FindAllUsersDto): Promise<Paginated<UserViewModel[]>> {
 
-        const filter = queryParams.searchNameTerm ? { name: { $regex: queryParams.searchNameTerm, $options: 'i' } } : {}
+        const filter: any = {}
+
+        if (queryParams.searchLoginTerm) {
+            filter.login = { $regex: queryParams.searchLoginTerm, $options: 'i' }
+        }
+
+        if (queryParams.searchEmailTerm) {
+            filter.email = { $regex: queryParams.searchEmailTerm, $options: 'i' }
+        }
+
+        if (queryParams.searchNameTerm) {
+            filter.name = { $regex: queryParams.searchNameTerm, $options: 'i' }
+        }
+
         const sortOptions: Record<string, SortOrder> = queryParams.order as Record<string, SortOrder>
 
         const [totalCount, items]: [number, UserDBModel[]] = await Promise.all([
