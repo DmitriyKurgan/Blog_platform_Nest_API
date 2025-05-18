@@ -17,16 +17,22 @@ export class UsersQueryRepository {
 
         const filter: any = {}
 
+        const orConditions: any[] = []
+
         if (queryParams.searchLoginTerm) {
-            filter.login = { $regex: queryParams.searchLoginTerm, $options: 'i' }
+            orConditions.push({ login: { $regex: queryParams.searchLoginTerm, $options: 'i' } })
         }
 
         if (queryParams.searchEmailTerm) {
-            filter.email = { $regex: queryParams.searchEmailTerm, $options: 'i' }
+            orConditions.push({ email: { $regex: queryParams.searchEmailTerm, $options: 'i' } })
         }
 
         if (queryParams.searchNameTerm) {
-            filter.name = { $regex: queryParams.searchNameTerm, $options: 'i' }
+            orConditions.push({ name: { $regex: queryParams.searchNameTerm, $options: 'i' } })
+        }
+
+        if (orConditions.length > 0) {
+            filter.$or = orConditions
         }
 
         const sortOptions: Record<string, SortOrder> = queryParams.order as Record<string, SortOrder>
