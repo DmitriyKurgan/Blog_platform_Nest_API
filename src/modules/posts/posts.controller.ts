@@ -6,12 +6,14 @@ import {CreatePostDto} from "./dto/createPost";
 import {UpdatePostDto} from "./dto/updatePost";
 import {CommentsQueryRepository} from "../comments/comments.query-repository";
 import {FindAllCommentsDto} from "../comments/queryDto/findAllCommentsDto";
+import {BlogsQueryRepository} from "../blogs/blogs.query-repository";
 
 @Controller('posts')
 export class PostsController {
     constructor(
         private readonly postsService: PostsService,
         private readonly postsQueryRepository: PostsQueryRepository,
+        private readonly blogsQueryRepository: BlogsQueryRepository,
         private readonly commentsQueryRepository: CommentsQueryRepository
     ) {}
 
@@ -36,7 +38,9 @@ export class PostsController {
     @Post()
     async createPost(@Body() dto: CreatePostDto) {
 
-        if (!dto.blogId) throw new BadRequestException('Blog ID is required')
+        const blog = await this.blogsQueryRepository.getBlogByID(dto.blogId)
+
+        if (blog) throw new BadRequestException('Blog ID is required')
 
         return this.postsService.createPost(dto)
     }
