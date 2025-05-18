@@ -37,10 +37,10 @@ export class PostsController {
 
     @Post()
     async createPost(@Body() dto: CreatePostDto) {
-
+        console.log('CreatePostDto', dto)
         const blog = await this.blogsQueryRepository.getBlogByID(dto.blogId)
-
-        if (blog) throw new BadRequestException('Blog ID is required')
+        console.log('blog', blog)
+        if (!blog) throw new BadRequestException('Blog ID is required')
 
         return this.postsService.createPost(dto)
     }
