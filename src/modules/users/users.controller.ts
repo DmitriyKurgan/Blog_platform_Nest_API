@@ -1,8 +1,9 @@
-import {Body, Controller, Delete, Get, Param, Post, Put, Query} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query} from '@nestjs/common';
 import {FindAllUsersDto} from "./queryDto/findAllUsersDto";
 import {UsersQueryRepository} from "./users.query-repository";
 import {UsersService} from "./users.service";
 import {CreateUserDto} from "./dto/createUser";
+import {ValidateUserIdPipe} from "../../pipes/parse-mongo-id.pipe";
 
 @Controller('users')
 export class UsersController {
@@ -23,7 +24,8 @@ export class UsersController {
 
 
     @Delete(':id')
-    async deletePost(@Param('id') userID: string) {
+    @HttpCode(204)
+    async deletePost(@Param('id', ValidateUserIdPipe) userID: string) {
         return this.usersService.deleteUser(userID)
     }
 }

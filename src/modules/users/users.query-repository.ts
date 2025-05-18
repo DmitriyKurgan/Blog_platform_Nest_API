@@ -4,6 +4,7 @@ import {UserDBModel} from "./types/getUser";
 import {FindAllUsersDto} from "./queryDto/findAllUsersDto";
 import { Paginated } from '../../common/paginated';
 import {UserViewModel} from "./dto/getUser";
+import {PostViewModel} from "../posts/dto/getPost";
 
 @Injectable()
 export class UsersQueryRepository {
@@ -33,6 +34,14 @@ export class UsersQueryRepository {
             size: queryParams.pageSize,
             page: queryParams.pageNumber,
         })
+    }
+
+    async getUserByID(userID: string): Promise<UserViewModel | null> {
+        const user = await this.userModel.findById(userID).exec()
+
+        if (!user) return null
+
+        return new UserViewModel(user)
     }
 
 }
