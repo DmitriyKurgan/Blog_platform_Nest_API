@@ -3,6 +3,7 @@ import { Model } from "mongoose";
 import {PostDBModel} from "./types/getPost";
 import {Post} from "./types/createPost";
 import {UpdatePostDto} from "./dto/updatePost";
+import {PostViewModel} from "./dto/getPost";
 
 @Injectable()
 export class PostsRepository {
@@ -11,9 +12,12 @@ export class PostsRepository {
         private postModel: Model<PostDBModel>,
     ) {}
 
-    async createPost (postData: Partial<Post>): Promise<Post>{
+    async createPost (postData: Partial<Post>): Promise<PostViewModel>{
         const createdPost = new this.postModel(postData)
-        return createdPost.save()
+        console.log('createdPost', createdPost)
+        await createdPost.save()
+
+       return new PostViewModel(createdPost)
     }
 
     async updatePost (blogID: string, updateData: UpdatePostDto): Promise<Post | null>{

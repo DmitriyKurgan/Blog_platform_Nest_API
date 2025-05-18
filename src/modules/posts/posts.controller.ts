@@ -7,6 +7,7 @@ import {UpdatePostDto} from "./dto/updatePost";
 import {CommentsQueryRepository} from "../comments/comments.query-repository";
 import {FindAllCommentsDto} from "../comments/queryDto/findAllCommentsDto";
 import {BlogsQueryRepository} from "../blogs/blogs.query-repository";
+import {PostViewModel} from "./dto/getPost";
 
 @Controller('posts')
 export class PostsController {
@@ -36,7 +37,7 @@ export class PostsController {
     }
 
     @Post()
-    async createPost(@Body() dto: CreatePostDto) {
+    async createPost(@Body() dto: CreatePostDto): Promise<PostViewModel | null> {
         console.log('CreatePostDto', dto)
         if (!dto.blogId) throw new BadRequestException('Blog ID is required')
         if (dto.blogId.length !== 24) throw new BadRequestException('Blog ID is not valid')
