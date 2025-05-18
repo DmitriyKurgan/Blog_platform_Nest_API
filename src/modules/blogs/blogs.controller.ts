@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, Param, Post, Put, Query} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query} from '@nestjs/common';
 import {BlogsService} from './blogs.service';
 import {CreateBlogDto} from "./dto/createBlog";
 import {FindAllBlogsDto} from "./queryDto/findAllblogsDto";
@@ -27,7 +27,9 @@ export class BlogsController {
     }
 
     @Get(':id')
-    async getBlogByID(@Param('id') blogID: string): Promise<BlogViewModel | null> {
+    async getBlogByID(
+        @Param('id', ValidateBlogIdPipe) blogID: string
+    ): Promise<BlogViewModel | null> {
         return this.blogsQueryRepository.getBlogByID(blogID)
     }
 
@@ -59,16 +61,18 @@ export class BlogsController {
     }
 
     @Put(':id')
+    @HttpCode(204)
     async updateBlog(
         @Body() updateBlogDto: UpdateBlogDto,
-        @Param('id') blogID: string,
+        @Param('id', ValidateBlogIdPipe) blogID: string,
     ) {
         return this.blogsService.updateBlog(blogID, updateBlogDto)
     }
 
 
     @Delete(':id')
-    async deleteBlog(@Param('id') blogID: string) {
+    @HttpCode(204)
+    async deleteBlog(@Param('id', ValidateBlogIdPipe) blogID: string) {
         return this.blogsService.deleteBlog(blogID)
     }
 }
